@@ -208,7 +208,9 @@ for (file in files) {
   df_ig$File <- gsub(".png", "", ig$file)
   df_ig$Block <- ig$block
   df_ig$Trial <- ig$trial_number
-  df_ig$ISI <- ig$isi
+  ISI <- rawdata[rawdata$screen == "IG_FixationCross" & !is.na(rawdata$screen), "trial_duration"]
+  ISI <- ISI[-(1:24)]  # Remove first 24 rows (practice trials)
+  df_ig$ISI <- as.numeric(ISI) / 1000 # In seconds
   df_ig$RT <- as.numeric(ig$rt) / 1000 # In seconds
   df_ig$Response <- ig$response
   df_ig$Response_Correct <- ig$correct
